@@ -135,11 +135,18 @@ def find_max(weather_data):
 
 def generate_summary(weather_data):
     summary= ""
+    low = []
+    high = []
     for row in weather_data:
-        # heading = f" {len(weather_data)}"
-        low_temp= f" The lowest temperature will be {format_temperature(convert_f_to_c(row[1]))}, and will occur on {convert_date(row[0])}\n"
-        high_temp= f" The highest temperature will be {format_temperature(convert_f_to_c(row[2]))}, and will occur on {convert_date(row[0])}\n"
-        summary = low_temp + high_temp
+        low.append(row[1])
+        high.append(row[2])
+
+    summary = f"{len(weather_data)} Day Overview\n\
+  The lowest temperature will be {format_temperature(convert_f_to_c(find_min(low)[0]))}, and will occur on {convert_date(weather_data[find_min(low)[1]][0])}.\n\
+  The highest temperature will be {format_temperature(convert_f_to_c(find_max(high)[0]))}, and will occur on {convert_date(weather_data[find_max(high)[1]][0])}.\n\
+  The average low this week is {format_temperature(convert_f_to_c(calculate_mean(low)))}.\n\
+  The average high this week is {format_temperature(convert_f_to_c(calculate_mean(high)))}.\n"
+
     return summary
 
     """Outputs a summary for the given weather data.
